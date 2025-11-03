@@ -4,13 +4,18 @@ const INSTAGRAM_USERNAME = 'eaed_org';
 
 exports.handler = async function(event, context) {
   try {
-    const url = `https://www.instagram.com/${INSTAGRAM_USERNAME}/?__a=1&__d=dis`;
-    const res = await fetch(url);
+    const url = `https://i.instagram.com/api/v1/users/web_profile_info/?username=${INSTAGRAM_USERNAME}`;
+    const res = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X)',
+        'x-ig-app-id': '936619743392459'
+      }
+    });
     if (!res.ok) {
       return { statusCode: res.status, body: 'Failed to fetch Instagram' };
     }
     const json = await res.json();
-    const edges = json.graphql?.user?.edge_owner_to_timeline_media?.edges || [];
+    const edges = json.data?.user?.edge_owner_to_timeline_media?.edges || [];
     const posts = edges.slice(0, 4).map(edge => {
       const node = edge.node;
       const captionEdge = node.edge_media_to_caption.edges[0];
@@ -22,7 +27,6 @@ exports.handler = async function(event, context) {
       };
     });
 
-    // Create Webflow items
     for (const post of posts) {
       const createUrl = `https://api.webflow.com/v2/collections/${WEBFLOW_COLLECTION_ID}/items`;
       const wfRes = await fetch(createUrl, {
