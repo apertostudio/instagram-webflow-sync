@@ -1,0 +1,5 @@
+[functions]
+  node_bundler = "esbuild"
+
+[functions."instagram-sync"]
+  schedule = "0 8 * * *"
