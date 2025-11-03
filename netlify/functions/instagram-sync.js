@@ -1,5 +1,3 @@
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
-
 const WEBFLOW_COLLECTION_ID = '6849a38e931f14e6e8731e1d';
 const WEBFLOW_TOKEN = '0eb8d6cc6d9bd138c990743250140ad6c0d2b58480c4430dfc7d3801f01313cf';
 const INSTAGRAM_USERNAME = 'eaed_org';
