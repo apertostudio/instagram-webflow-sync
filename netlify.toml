@@ -1,0 +1,7 @@
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["apify-client"]
+
+[functions."instagram-sync"]
+  # Esegui ogni lunedì alle 08:00 UTC (settimanale)
+  schedule = "0 8 * * 1"
